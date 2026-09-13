@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="favicon.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
 <link rel="stylesheet" href="styles.css">
 
 </head>
@@ -316,7 +317,7 @@
           <li><a href="tel:0794872444">0794 872 444</a></li>
           <li><a href="tel:0710868016">0710 868 016</a></li>
           <li><a href="https://wa.me/254794872444">WhatsApp Us</a></li>
-          <li><a href="https://share.google/f1be64bgWxFeCXglC" target="_blank" rel="noopener">Get Directions</a></li>
+          <li><a href="https://share.google/f1be64bgWxFeCXglC" target="_blank" rel="noopener noreferrer">Get Directions</a></li>
         </ul>
       </div>
     </div>
@@ -486,6 +487,9 @@
   // ---------------------------------------------------------------------
   // Review + send
   // ---------------------------------------------------------------------
+  // Security note: review values come from user-entered fields, so they are
+  // rendered via textContent (never innerHTML/template strings) to prevent
+  // any possibility of script injection into the page.
   function buildReview() {
     const data = collectData();
     const rows = [
@@ -498,9 +502,25 @@
       ['Location', data.location || 'Not specified'],
       ['Contact via', data.contactMethod === 'whatsapp' ? 'WhatsApp' : 'Phone call']
     ];
-    document.getElementById('reviewSummary').innerHTML = rows.map(([label, value]) =>
-      `<div class="review-row"><span class="review-label">${label}</span><span class="review-value">${value}</span></div>`
-    ).join('');
+
+    const summaryEl = document.getElementById('reviewSummary');
+    summaryEl.innerHTML = ''; // clear previous render
+    rows.forEach(([label, value]) => {
+      const row = document.createElement('div');
+      row.className = 'review-row';
+
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'review-label';
+      labelSpan.textContent = label;
+
+      const valueSpan = document.createElement('span');
+      valueSpan.className = 'review-value';
+      valueSpan.textContent = value; // textContent — never parsed as HTML
+
+      row.appendChild(labelSpan);
+      row.appendChild(valueSpan);
+      summaryEl.appendChild(row);
+    });
 
     document.getElementById('whatsappAction').style.display = data.contactMethod === 'whatsapp' ? 'block' : 'none';
     document.getElementById('callAction').style.display = data.contactMethod === 'call' ? 'block' : 'none';
@@ -537,7 +557,7 @@
     const url = `https://wa.me/254794872444?text=${encodeURIComponent(lines)}`;
     // TODO (backend): also POST `data` to /api/requests here once a backend exists,
     // so requests are tracked even if the customer doesn't complete the WhatsApp send.
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener,noreferrer');
     form.style.display = 'none';
     document.getElementById('stepper').style.display = 'none';
     confirmPanel.style.display = 'block';

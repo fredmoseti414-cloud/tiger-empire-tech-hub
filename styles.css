@@ -1049,3 +1049,24 @@
 /* Coming soon tag for insights placeholders */
 .coming-soon { position: absolute; top: 10px; right: 10px; background: var(--color-text); color: #fff; font-size: 10.5px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; z-index: 1; }
 .article-card { position: relative; }
+
+/* Trusted platforms logo strip (Online Services page) */
+.platform-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  padding: var(--space-3) 0 var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.platform-strip img {
+  height: 36px;
+  width: auto;
+  filter: grayscale(15%);
+  opacity: 0.92;
+}
+@media (max-width: 700px) {
+  .platform-strip { gap: var(--space-3); }
+  .platform-strip img { height: 28px; }
+}
