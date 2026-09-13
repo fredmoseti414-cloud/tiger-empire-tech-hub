@@ -1241,3 +1241,65 @@
   padding: 6px 10px 10px;
   background: #fff;
 }
+
+/* FAQ accordion (dedicated FAQ page) */
+.faq-accordion { max-width: 760px; margin: 0 auto; }
+.faq-accordion details {
+  border-bottom: 1px solid var(--color-border);
+  padding: 18px 0;
+}
+.faq-accordion summary {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.faq-accordion summary::-webkit-details-marker { display: none; }
+.faq-accordion summary::after {
+  content: '+';
+  font-size: 20px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  font-weight: 400;
+}
+.faq-accordion details[open] summary::after { content: '−'; }
+.faq-accordion .faq-answer { color: var(--color-text-secondary); font-size: 15px; margin-top: 10px; max-width: 62ch; }
+.faq-accordion .faq-answer a { color: var(--color-accent); font-weight: 600; }
+
+/* ==========================================================================
+   BILINGUAL (EN / SW) TOGGLE
+   Site defaults to English. Swahili translations currently cover the shared
+   navigation/footer plus the Home, Contact, FAQ and Request-a-Solution pages.
+   Other pages keep their nav/footer in the chosen language, with page body
+   content still in English until translated using the same [data-i18n] pattern.
+   ========================================================================== */
+html[data-lang="en"] [data-i18n="sw"] { display: none !important; }
+html[data-lang="sw"] [data-i18n="en"] { display: none !important; }
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: 100px;
+  overflow: hidden;
+  font-size: 12.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.lang-toggle button {
+  background: none;
+  border: none;
+  padding: 7px 12px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+.lang-toggle button.active { background: var(--color-text); color: #fff; }
+
+@media (max-width: 960px) {
+  .header-actions .lang-toggle { order: -1; }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Tiger Empire Tech Hub",
+  "short_name": "Tiger Empire",
+  "description": "Digital solutions. Real-world impact.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#EE6C0E",
+  "icons": [
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
