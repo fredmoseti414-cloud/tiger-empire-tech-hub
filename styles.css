@@ -1070,3 +1070,174 @@
   .platform-strip { gap: var(--space-3); }
   .platform-strip img { height: 28px; }
 }
+
+/* ==========================================================================
+   FAQ CHAT WIDGET (scripted, no external AI — see faq-widget.js)
+   ========================================================================== */
+
+.faq-bubble-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 120;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(17,17,17,0.22);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.faq-bubble-btn:hover { background: var(--color-accent-hover); transform: translateY(-2px); }
+.faq-bubble-btn svg { width: 26px; height: 26px; }
+.faq-bubble-btn .close-icon { display: none; }
+.faq-bubble-btn.open .chat-icon { display: none; }
+.faq-bubble-btn.open .close-icon { display: block; }
+
+@media (max-width: 960px) {
+  .faq-bubble-btn { bottom: 84px; } /* clears the sticky call/whatsapp/request bar */
+}
+
+.faq-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 92px;
+  z-index: 119;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  height: 460px;
+  max-height: calc(100vh - 140px);
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 24px 60px rgba(17,17,17,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.faq-panel.open { display: flex; }
+
+@media (max-width: 960px) {
+  .faq-panel { bottom: 152px; }
+}
+
+.faq-header {
+  background: var(--color-text);
+  color: #fff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.faq-header img { width: 28px; height: 28px; border-radius: 50%; background: #fff; }
+.faq-header-text { flex-grow: 1; }
+.faq-header-text .name { font-size: 14px; font-weight: 700; }
+.faq-header-text .status { font-size: 11.5px; color: rgba(255,255,255,0.6); }
+.faq-clear-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.faq-clear-btn:hover { color: #fff; }
+
+.faq-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-bg-alt);
+}
+.faq-msg {
+  max-width: 84%;
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.faq-msg.bot {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.faq-msg.user {
+  background: var(--color-accent);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.faq-msg a.faq-cta {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.faq-msg.bot a.faq-cta { text-decoration: underline; }
+
+.faq-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.faq-chip {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text);
+}
+.faq-chip:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.faq-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--color-border);
+  background: #fff;
+}
+.faq-input-row input {
+  flex-grow: 1;
+  border: 1.5px solid var(--color-border);
+  border-radius: 100px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-family: var(--font-body);
+}
+.faq-input-row input:focus { outline: none; border-color: var(--color-accent); }
+.faq-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.faq-send-btn:hover { background: var(--color-accent-hover); }
+.faq-send-btn svg { width: 18px; height: 18px; }
+.faq-disclaimer {
+  font-size: 10.5px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 6px 10px 10px;
+  background: #fff;
+}

@@ -443,5 +443,33 @@
 
 </script>
 
+
+<!-- Quick Help widget — scripted FAQ, no external AI, see faq-widget.js -->
+<button class="faq-bubble-btn" id="faqBubbleBtn" aria-label="Open quick help" aria-expanded="false">
+  <svg class="chat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+  <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+</button>
+
+<div class="faq-panel" id="faqPanel" role="dialog" aria-label="Quick help chat">
+  <div class="faq-header">
+    <img src="logo-icon.png" alt="">
+    <div class="faq-header-text">
+      <div class="name">Tiger Empire Quick Help</div>
+      <div class="status">Scripted answers &middot; not a live agent</div>
+    </div>
+    <button class="faq-clear-btn" id="faqClearBtn" type="button">Reset</button>
+  </div>
+  <div class="faq-body" id="faqBody"></div>
+  <div class="faq-input-row">
+    <input type="text" id="faqInput" placeholder="Ask a question..." aria-label="Type your question">
+    <button class="faq-send-btn" id="faqSendBtn" type="button" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+  <div class="faq-disclaimer">Answers come from a fixed list, not live AI. For anything else, message us on WhatsApp.</div>
+</div>
+
+<script src="faq-widget.js"></script>
+
 </body>
 </html>
