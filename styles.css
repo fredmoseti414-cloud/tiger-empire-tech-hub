@@ -24,6 +24,11 @@
     --radius-lg: 16px;
 
     --header-height: 76px;
+
+    /* Fallback only — layout-fix.js measures the real rendered bar height
+       (including the device safe-area) and overrides this precisely. */
+    --sticky-bar-h: 64px;
+    --chat-gap: 20px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -257,7 +262,7 @@
     z-index: 90;
     background: #fff;
     border-top: 1px solid var(--color-border);
-    padding: 10px var(--space-2);
+    padding: 10px var(--space-2) calc(10px + env(safe-area-inset-bottom, 0px));
     gap: 8px;
   }
   .sticky-cta-bar a {
@@ -278,7 +283,7 @@
     .header-actions .btn-secondary,
     .header-actions .btn-primary { display: none; }
     .sticky-cta-bar { display: flex; }
-    body { padding-bottom: 64px; }
+    body { padding-bottom: var(--sticky-bar-h); }
   }
 
   @media (max-width: 480px) {
@@ -1112,7 +1117,9 @@
 .faq-bubble-btn.open .close-icon { display: block; }
 
 @media (max-width: 960px) {
-  .faq-bubble-btn { bottom: 84px; } /* clears the sticky call/whatsapp/request bar */
+  /* Sits a consistent gap above the sticky call/WhatsApp/request bar,
+     however tall that bar actually renders on this device. */
+  .faq-bubble-btn { bottom: calc(var(--sticky-bar-h) + var(--chat-gap)); }
 }
 
 .faq-panel {
@@ -1135,7 +1142,7 @@
 .faq-panel.open { display: flex; }
 
 @media (max-width: 960px) {
-  .faq-panel { bottom: 152px; }
+  .faq-panel { bottom: calc(var(--sticky-bar-h) + var(--chat-gap) + 68px); }
 }
 
 .faq-header {
@@ -1330,7 +1337,7 @@ html[data-lang="sw"] [data-i18n="en"] { display: none !important; }
   border: 1px solid var(--color-border);
 }
 
-/* Real photography in media slots — branded treatment (no captions/labels) */
+/* Local branded illustrations in media slots (no captions/labels) */
 .feature-card-media, .article-media {
   position: relative;
   overflow: hidden;
@@ -1339,7 +1346,6 @@ html[data-lang="sw"] [data-i18n="en"] { display: none !important; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(8%) saturate(1.08) contrast(1.03);
   transition: transform 0.25s ease;
 }
 .feature-card:hover .feature-card-media img,
@@ -1369,7 +1375,6 @@ html[data-lang="sw"] [data-i18n="en"] { display: none !important; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(8%) saturate(1.08) contrast(1.03);
 }
 .article-hero-image::after {
   content: '';
