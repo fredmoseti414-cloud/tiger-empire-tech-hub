@@ -45,9 +45,9 @@
     },
     {
       id: "contact",
-      keywords: ["contact", "phone", "call", "number", "whatsapp", "reach", "talk"],
+      keywords: ["contact", "phone", "call", "number", "whatsapp", "reach", "talk", "email", "mail"],
       question: "How do I contact you?",
-      answer: "Call or WhatsApp 0794 872 444 or 0710 868 016.",
+      answer: "Call or WhatsApp 0794 872 444 / 0710 868 016, or email tigerempiretech@gmail.com.",
       cta: { text: "Message us on WhatsApp", href: "https://wa.me/254794872444" }
     },
     {

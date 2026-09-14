@@ -28,7 +28,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     font-family: var(--font-body);
@@ -36,16 +36,20 @@
     background: var(--color-bg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   a { color: inherit; text-decoration: none; }
   ul { list-style: none; }
   img, svg { display: block; max-width: 100%; }
+  h1, h2, h3, h4, p { overflow-wrap: break-word; word-break: break-word; }
 
   .container {
     max-width: 1240px;
     margin: 0 auto;
     padding: 0 var(--space-3);
+    width: 100%;
   }
 
   :focus-visible {
@@ -271,9 +275,17 @@
   @media (max-width: 960px) {
     .primary-nav { display: none; }
     .menu-toggle { display: flex; }
-    .header-actions .btn-secondary { display: none; }
+    .header-actions .btn-secondary,
+    .header-actions .btn-primary { display: none; }
     .sticky-cta-bar { display: flex; }
     body { padding-bottom: 64px; }
+  }
+
+  @media (max-width: 480px) {
+    .logo-word { font-size: 15px; }
+    .logo-word span { display: block; font-size: 12px; }
+    .lang-toggle button { padding: 6px 9px; font-size: 11.5px; }
+    .header-inner { gap: 8px; }
   }
 
   /* ---------- HERO ---------- */
@@ -885,7 +897,7 @@
   font-size: 14.5px;
 }
 .review-row .review-label { color: var(--color-text-secondary); font-weight: 600; flex-shrink: 0; }
-.review-row .review-value { text-align: right; font-weight: 600; }
+.review-row .review-value { text-align: right; font-weight: 600; overflow-wrap: break-word; word-break: break-word; min-width: 0; }
 
 .confirm-panel {
   max-width: 640px;
@@ -1302,4 +1314,67 @@ html[data-lang="sw"] [data-i18n="en"] { display: none !important; }
 
 @media (max-width: 960px) {
   .header-actions .lang-toggle { order: -1; }
+}
+
+/* Safety net: any .card-link icon anywhere on the site is capped to a small
+   size by default, regardless of parent context (prevents unstyled SVGs
+   rendering at full intrinsic size, as happened with the Insights arrows). */
+.card-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* Timeline photo (About page — real workspace photo) */
+.timeline-image {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius-md);
+  margin-top: var(--space-2);
+  border: 1px solid var(--color-border);
+}
+
+/* Real photography in media slots — branded treatment (no captions/labels) */
+.feature-card-media, .article-media {
+  position: relative;
+  overflow: hidden;
+}
+.feature-card-media img, .article-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(8%) saturate(1.08) contrast(1.03);
+  transition: transform 0.25s ease;
+}
+.feature-card:hover .feature-card-media img,
+.article-card:hover .article-media img {
+  transform: scale(1.04);
+}
+.feature-card-media::after, .article-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(238,108,14,0.06) 0%, rgba(17,17,17,0.12) 100%);
+  pointer-events: none;
+}
+.feature-card-media { border-top: 3px solid var(--color-accent); }
+
+/* Article detail-page hero photo */
+.article-hero-image {
+  max-width: 900px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16/8;
+  position: relative;
+  border-top: 3px solid var(--color-accent);
+}
+.article-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(8%) saturate(1.08) contrast(1.03);
+}
+.article-hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(238,108,14,0.06) 0%, rgba(17,17,17,0.12) 100%);
+  pointer-events: none;
 }

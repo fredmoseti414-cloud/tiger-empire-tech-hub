@@ -237,6 +237,10 @@
                 <input type="radio" name="contactMethod" value="call">
                 <div><div class="radio-title">Phone call</div><div class="radio-sub">We'll call you directly.</div></div>
               </label>
+              <label class="radio-card">
+                <input type="radio" name="contactMethod" value="email">
+                <div><div class="radio-title">Email</div><div class="radio-sub">tigerempiretech@gmail.com — good for attaching documents.</div></div>
+              </label>
             </div>
           </div>
         </div>
@@ -256,6 +260,11 @@
           <div class="form-group" id="callAction" style="display:none;">
             <a class="btn btn-primary" style="width:100%; display:flex;" href="tel:0794872444" id="callNowBtn">Call 0794 872 444</a>
             <div class="hint">Mention your name and what you need — we'll take it from there.</div>
+          </div>
+
+          <div class="form-group" id="emailAction" style="display:none;">
+            <button type="button" class="btn btn-primary" style="width:100%;" id="sendEmailBtn">Send via Email</button>
+            <div class="hint">Opens your email app with the request filled in — attach any files before sending.</div>
           </div>
         </div>
 
@@ -331,6 +340,7 @@
         <ul>
           <li><a href="tel:0794872444">0794 872 444</a></li>
           <li><a href="tel:0710868016">0710 868 016</a></li>
+          <li><a href="mailto:tigerempiretech@gmail.com">tigerempiretech@gmail.com</a></li>
           <li><a href="https://wa.me/254794872444"><span data-i18n="en">WhatsApp Us</span><span data-i18n="sw">Tutumie WhatsApp</span></a></li>
           <li><a href="https://share.google/f1be64bgWxFeCXglC" target="_blank" rel="noopener noreferrer"><span data-i18n="en">Get Directions</span><span data-i18n="sw">Pata Maelekezo</span></a></li>
         </ul>
@@ -515,7 +525,7 @@
       ['Name', data.fullName],
       ['Phone', data.phone],
       ['Location', data.location || 'Not specified'],
-      ['Contact via', data.contactMethod === 'whatsapp' ? 'WhatsApp' : 'Phone call']
+      ['Contact via', data.contactMethod === 'whatsapp' ? 'WhatsApp' : data.contactMethod === 'email' ? 'Email' : 'Phone call']
     ];
 
     const summaryEl = document.getElementById('reviewSummary');
@@ -539,6 +549,7 @@
 
     document.getElementById('whatsappAction').style.display = data.contactMethod === 'whatsapp' ? 'block' : 'none';
     document.getElementById('callAction').style.display = data.contactMethod === 'call' ? 'block' : 'none';
+    document.getElementById('emailAction').style.display = data.contactMethod === 'email' ? 'block' : 'none';
   }
 
   function collectData() {
@@ -579,6 +590,27 @@
   });
 
   document.getElementById('callNowBtn').addEventListener('click', () => {
+    form.style.display = 'none';
+    document.getElementById('stepper').style.display = 'none';
+    confirmPanel.style.display = 'block';
+  });
+
+  document.getElementById('sendEmailBtn').addEventListener('click', () => {
+    const data = collectData();
+    const subject = `Solution Request: ${data.category} — ${data.service}`;
+    const bodyLines = [
+      `Solution: ${data.category} — ${data.service}`,
+      `Details: ${data.description}`,
+      data.deadline ? `Needed by: ${data.deadline}` : null,
+      `Name: ${data.fullName}`,
+      `Phone: ${data.phone}`,
+      data.location ? `Location: ${data.location}` : null,
+      data.fileName ? `(Please attach: ${data.fileName})` : null
+    ].filter(Boolean).join('\n');
+
+    const url = `mailto:tigerempiretech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
+    // TODO (backend): also POST `data` to /api/requests here once a backend exists.
+    window.location.href = url;
     form.style.display = 'none';
     document.getElementById('stepper').style.display = 'none';
     confirmPanel.style.display = 'block';
